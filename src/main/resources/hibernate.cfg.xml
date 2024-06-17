@@ -16,6 +16,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
         <mapping class="com.mycompany.controlsalidas.Defensor"/>
+        <mapping class="com.mycompany.controlsalidas.Salida"/>
     </session-factory>
 </hibernate-configuration>
 
