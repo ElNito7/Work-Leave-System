@@ -19,7 +19,7 @@ public class Defensor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private Long id;
+    private long id;
 
     @Column(name="nombre")
     private String nombre;
@@ -30,11 +30,11 @@ public class Defensor {
     
     public Defensor(){}
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

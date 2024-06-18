@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 /**
  *
@@ -24,13 +26,14 @@ public class Salida {
     @Column(name="id")
     private long id;
     
-    @Column(name="defensor_id")
-    private long defId;
+    @ManyToOne
+    @JoinColumn(name = "defensor_id", nullable = false)
+    private Defensor defensor;
     
     @Column(name="fecha")
     private LocalDate fecha;
     
-    @Column(name="hora")
+    @Column(name="hora_salida")
     private Time hora;
     
     @Column(name="diligencia")
@@ -46,8 +49,8 @@ public class Salida {
     private String duracion;
     
     public Salida(){}
-    public Salida(long defId, Time hora, String diligencia, String lugar, String expediente, String duracion){
-        this.defId = defId;
+    public Salida(Defensor defensor, Time hora, String diligencia, String lugar, String expediente, String duracion){
+        this.defensor = defensor;
         this.fecha = LocalDate.now();
         this.hora = hora;
         this.diligencia = diligencia;
@@ -64,12 +67,12 @@ public class Salida {
         this.id = id;
     }
 
-    public long getDefId() {
-        return defId;
+    public Defensor getDefId() {
+        return defensor;
     }
 
-    public void setDefId(long defId) {
-        this.defId = defId;
+    public void setDefId(Defensor defId) {
+        this.defensor = defId;
     }
 
     public LocalDate getFecha() {
