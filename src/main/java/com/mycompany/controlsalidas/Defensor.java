@@ -24,8 +24,12 @@ public class Defensor {
     @Column(name="nombre")
     private String nombre;
     
-    public Defensor(String nombre){
+    @Column(name="correo")
+    private String email;
+    
+    public Defensor(String nombre, String email){
         this.nombre = nombre;
+        this.email = email;
     }
     
     public Defensor(){}
@@ -44,5 +48,13 @@ public class Defensor {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
