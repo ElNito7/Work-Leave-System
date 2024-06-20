@@ -42,14 +42,13 @@ public class viewPanel extends javax.swing.JPanel {
         bg = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         buscarBtn = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaSalidas = new javax.swing.JTable();
-        exportBtn = new javax.swing.JButton();
-        buscador = new javax.swing.JComboBox<>();
-        btnP = new javax.swing.JPanel();
         semanaBtn = new javax.swing.JRadioButton();
         mesBtn = new javax.swing.JRadioButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaSalidas = new javax.swing.JTable();
         todoBtn = new javax.swing.JRadioButton();
+        exportBtn = new javax.swing.JButton();
+        buscador = new javax.swing.JComboBox<>();
 
         setMinimumSize(new java.awt.Dimension(804, 588));
         setName("salP"); // NOI18N
@@ -66,6 +65,26 @@ public class viewPanel extends javax.swing.JPanel {
         buscarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscarBtnActionPerformed(evt);
+            }
+        });
+
+        filtros.add(semanaBtn);
+        semanaBtn.setForeground(new java.awt.Color(0, 0, 0));
+        semanaBtn.setText("Esta Semana");
+        semanaBtn.setActionCommand("SEMANA");
+        semanaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                semanaBtnActionPerformed(evt);
+            }
+        });
+
+        filtros.add(mesBtn);
+        mesBtn.setForeground(new java.awt.Color(0, 0, 0));
+        mesBtn.setText("Este Mes");
+        mesBtn.setActionCommand("MES");
+        mesBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mesBtnActionPerformed(evt);
             }
         });
 
@@ -94,37 +113,6 @@ public class viewPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tablaSalidas);
 
-        exportBtn.setText("Exportar Tabla");
-        exportBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exportBtnActionPerformed(evt);
-            }
-        });
-
-        buscador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS" }));
-
-        btnP.setBackground(new java.awt.Color(204, 204, 204));
-
-        filtros.add(semanaBtn);
-        semanaBtn.setForeground(new java.awt.Color(0, 0, 0));
-        semanaBtn.setText("Esta Semana");
-        semanaBtn.setActionCommand("SEMANA");
-        semanaBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                semanaBtnActionPerformed(evt);
-            }
-        });
-
-        filtros.add(mesBtn);
-        mesBtn.setForeground(new java.awt.Color(0, 0, 0));
-        mesBtn.setText("Este Mes");
-        mesBtn.setActionCommand("MES");
-        mesBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mesBtnActionPerformed(evt);
-            }
-        });
-
         filtros.add(todoBtn);
         todoBtn.setForeground(new java.awt.Color(0, 0, 0));
         todoBtn.setSelected(true);
@@ -136,28 +124,14 @@ public class viewPanel extends javax.swing.JPanel {
             }
         });
 
-        javax.swing.GroupLayout btnPLayout = new javax.swing.GroupLayout(btnP);
-        btnP.setLayout(btnPLayout);
-        btnPLayout.setHorizontalGroup(
-            btnPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnPLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(todoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(mesBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(12, 12, 12)
-                .addComponent(semanaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        btnPLayout.setVerticalGroup(
-            btnPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnPLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(btnPLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(todoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mesBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(semanaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+        exportBtn.setText("Exportar Tabla");
+        exportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportBtnActionPerformed(evt);
+            }
+        });
+
+        buscador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS" }));
 
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
@@ -167,41 +141,41 @@ public class viewPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(633, 633, 633))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
+                        .addComponent(buscador, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buscarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(todoBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mesBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(semanaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(bgLayout.createSequentialGroup()
-                        .addComponent(exportBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(517, 517, 517))
-                    .addGroup(bgLayout.createSequentialGroup()
-                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(bgLayout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-                                .addGap(235, 235, 235))
-                            .addGroup(bgLayout.createSequentialGroup()
-                                .addComponent(buscador, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(14, 14, 14)))
-                        .addComponent(buscarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(exportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         bgLayout.setVerticalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(bgLayout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buscador))
-                    .addGroup(bgLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(buscarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buscarBtn)
+                    .addComponent(mesBtn)
+                    .addComponent(semanaBtn)
+                    .addComponent(todoBtn)
+                    .addComponent(buscador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(exportBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                .addGap(106, 106, 106))
+                .addComponent(exportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(134, 134, 134))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -295,13 +269,13 @@ public class viewPanel extends javax.swing.JPanel {
     private List<Salida> filtrar(LocalDate inicio, LocalDate hoy, Session session){
         List<Salida> filtrada;
         if (buscador.getSelectedItem().toString().equals("TODOS")){
-            filtrada = session.createQuery("From Salida where fecha between :fInicio and :fActual order by fecha desc", Salida.class)
+            filtrada = session.createQuery("From Salida where fecha between :fInicio and :fActual", Salida.class)
                 .setParameter("fInicio", inicio)
                 .setParameter("fActual", hoy)
                 .getResultList();
         } else {
             filtrada = session.createQuery("select s from Salida s join s.defensor d where s.fecha between :fInicio and :fActual and"+
-                "(upper(d.nombre) like :b or upper(s.diligencia) like :b or upper(s.expediente) like :b or upper(s.lugar) like :b) order by s.fecha desc", Salida.class)
+                "(upper(d.nombre) like :b or upper(s.diligencia) like :b or upper(s.expediente) like :b or upper(s.lugar) like :b)", Salida.class)
                 .setParameter("fInicio", inicio)
                 .setParameter("fActual", hoy)
                 .setParameter("b", "%"+buscador.getSelectedItem().toString().toUpperCase()+"%")
@@ -322,7 +296,6 @@ public class viewPanel extends javax.swing.JPanel {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
-    private javax.swing.JPanel btnP;
     private javax.swing.JComboBox<String> buscador;
     private javax.swing.JButton buscarBtn;
     private javax.swing.JButton exportBtn;
