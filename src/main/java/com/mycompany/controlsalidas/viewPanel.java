@@ -4,13 +4,16 @@
  */
 package com.mycompany.controlsalidas;
 
+import java.awt.Frame;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.Session;
-
 /**
  *
  * @author Keloc
@@ -22,6 +25,7 @@ public class viewPanel extends javax.swing.JPanel {
      */
     public viewPanel() {
         initComponents();
+        gui.initDefs(buscador);
         initTable();
     }
 
@@ -37,16 +41,18 @@ public class viewPanel extends javax.swing.JPanel {
         filtros = new javax.swing.ButtonGroup();
         bg = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        buscador = new javax.swing.JTextField();
         buscarBtn = new javax.swing.JButton();
         semanaBtn = new javax.swing.JRadioButton();
         mesBtn = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaSalidas = new javax.swing.JTable();
         todoBtn = new javax.swing.JRadioButton();
+        exportBtn = new javax.swing.JButton();
+        buscador = new javax.swing.JComboBox<>();
 
-        setMinimumSize(new java.awt.Dimension(720, 465));
-        setPreferredSize(new java.awt.Dimension(720, 465));
+        setMinimumSize(new java.awt.Dimension(804, 588));
+        setName("salP"); // NOI18N
+        setPreferredSize(new java.awt.Dimension(804, 588));
 
         bg.setBackground(new java.awt.Color(204, 204, 204));
         bg.setForeground(new java.awt.Color(0, 0, 0));
@@ -118,6 +124,15 @@ public class viewPanel extends javax.swing.JPanel {
             }
         });
 
+        exportBtn.setText("Exportar Tabla");
+        exportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportBtnActionPerformed(evt);
+            }
+        });
+
+        buscador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS" }));
+
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
         bgLayout.setHorizontalGroup(
@@ -138,7 +153,10 @@ public class viewPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(mesBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(semanaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(semanaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(bgLayout.createSequentialGroup()
+                        .addComponent(exportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         bgLayout.setVerticalGroup(
@@ -148,14 +166,16 @@ public class viewPanel extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buscador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buscarBtn)
                     .addComponent(mesBtn)
                     .addComponent(semanaBtn)
-                    .addComponent(todoBtn))
+                    .addComponent(todoBtn)
+                    .addComponent(buscador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                .addGap(191, 191, 191))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(exportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(134, 134, 134))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -188,6 +208,33 @@ public class viewPanel extends javax.swing.JPanel {
         initTable();
     }//GEN-LAST:event_buscarBtnActionPerformed
 
+    private void exportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportBtnActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar como");
+
+        // Filtrar para mostrar solo archivos .xlsx
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos Excel (*.xlsx)", "xlsx"));
+        
+        Frame[] f = gui.getFrames();
+        int userSelection = fileChooser.showSaveDialog(f[0]);
+        
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            // Añadir la extensión .xlsx si no está presente
+            if (!fileToSave.getAbsolutePath().endsWith(".xlsx")) {
+                fileToSave = new File(fileToSave + ".xlsx");
+            }
+
+            ExcelExporter exporter = new ExcelExporter();
+            try {
+                exporter.exportTable(tablaSalidas, fileToSave.getAbsolutePath());
+                JOptionPane.showMessageDialog(null, "Archivo guardado satisfacoriamente en: "+fileToSave.getAbsolutePath());
+            } catch (IOException ex) {
+                 ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_exportBtnActionPerformed
+
 
     public void initTable(){
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -199,13 +246,13 @@ public class viewPanel extends javax.swing.JPanel {
             //filtrar
             if (filtros.getSelection().getActionCommand().equals("MES")){
                 inicio = d.minusDays(d.getDayOfMonth()-1);
-                salidas = filtrar(inicio, d, buscador.getText().toUpperCase(), session);
+                salidas = filtrar(inicio, d, session);
             } else if(filtros.getSelection().getActionCommand().equals("SEMANA")){
                 inicio = d.minusDays(d.getDayOfWeek().getValue()-1);
-                salidas = filtrar(inicio, d, buscador.getText().toUpperCase(), session);
+                salidas = filtrar(inicio, d, session);
             } else {
                 inicio = (LocalDate) session.createQuery("select min(s.fecha) from Salida s").uniqueResult();
-                salidas = filtrar(inicio, d, buscador.getText().toUpperCase(), session);
+                salidas = filtrar(inicio, d, session);
             }
             setTable(salidas);
             session.getTransaction().commit();
@@ -219,9 +266,9 @@ public class viewPanel extends javax.swing.JPanel {
                 session.close();
         }
     }
-    private List<Salida> filtrar(LocalDate inicio, LocalDate hoy, String buscador, Session session){
+    private List<Salida> filtrar(LocalDate inicio, LocalDate hoy, Session session){
         List<Salida> filtrada;
-        if (buscador.isBlank()){
+        if (buscador.getSelectedItem().toString().equals("TODOS")){
             filtrada = session.createQuery("From Salida where fecha between :fInicio and :fActual", Salida.class)
                 .setParameter("fInicio", inicio)
                 .setParameter("fActual", hoy)
@@ -231,7 +278,7 @@ public class viewPanel extends javax.swing.JPanel {
                 "(upper(d.nombre) like :b or upper(s.diligencia) like :b or upper(s.expediente) like :b or upper(s.lugar) like :b)", Salida.class)
                 .setParameter("fInicio", inicio)
                 .setParameter("fActual", hoy)
-                .setParameter("b", "%"+buscador+"%")
+                .setParameter("b", "%"+buscador.getSelectedItem().toString().toUpperCase()+"%")
                 .getResultList();
         }
         return filtrada;
@@ -249,8 +296,9 @@ public class viewPanel extends javax.swing.JPanel {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
-    private javax.swing.JTextField buscador;
+    private javax.swing.JComboBox<String> buscador;
     private javax.swing.JButton buscarBtn;
+    private javax.swing.JButton exportBtn;
     private javax.swing.ButtonGroup filtros;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

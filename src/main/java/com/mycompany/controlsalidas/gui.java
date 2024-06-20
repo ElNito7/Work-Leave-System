@@ -5,11 +5,8 @@
 package com.mycompany.controlsalidas;
 
 import java.awt.BorderLayout;
-import java.sql.Time;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.hibernate.Session;
@@ -25,12 +22,11 @@ public class gui extends javax.swing.JFrame {
      */
     private viewPanel vistaSalidas;
     private addPanel vistaAdd;
+    private String usuarioActual;
+    
     public gui() {
         initComponents();
-        this.vistaSalidas = new viewPanel();
-        this.vistaAdd = new addPanel();
-        cambiarContent(vistaAdd);
-        returnBtn.setVisible(false);
+        initDefs(usuario);
     }
     
     
@@ -45,10 +41,13 @@ public class gui extends javax.swing.JFrame {
 
         bg = new javax.swing.JPanel();
         content = new javax.swing.JPanel();
-        returnBtn = new javax.swing.JButton();
-        salidasBtn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        usuario = new javax.swing.JComboBox<>();
+        loginBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setName("frame"); // NOI18N
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -58,63 +57,73 @@ public class gui extends javax.swing.JFrame {
         bg.setBackground(new java.awt.Color(204, 204, 204));
 
         content.setBackground(new java.awt.Color(204, 204, 204));
+        content.setMinimumSize(new java.awt.Dimension(804, 588));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Sistema de Control de Salidas");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Usuario:");
+
+        usuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DELEGADO" }));
+
+        loginBtn.setText("Login");
+        loginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
         content.setLayout(contentLayout);
         contentLayout.setHorizontalGroup(
             contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(contentLayout.createSequentialGroup()
+                .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(contentLayout.createSequentialGroup()
+                        .addGap(151, 151, 151)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(contentLayout.createSequentialGroup()
+                        .addGap(181, 181, 181)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(contentLayout.createSequentialGroup()
+                        .addGap(216, 216, 216)
+                        .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
         contentLayout.setVerticalGroup(
             contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 465, Short.MAX_VALUE)
+            .addGroup(contentLayout.createSequentialGroup()
+                .addGap(86, 86, 86)
+                .addComponent(jLabel1)
+                .addGap(42, 42, 42)
+                .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(44, 44, 44)
+                .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(297, Short.MAX_VALUE))
         );
-
-        returnBtn.setText("Volver");
-        returnBtn.setMaximumSize(new java.awt.Dimension(300, 45));
-        returnBtn.setMinimumSize(new java.awt.Dimension(260, 45));
-        returnBtn.setPreferredSize(new java.awt.Dimension(260, 45));
-        returnBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                returnBtnActionPerformed(evt);
-            }
-        });
-
-        salidasBtn.setText("Ver Salidas");
-        salidasBtn.setMaximumSize(new java.awt.Dimension(300, 45));
-        salidasBtn.setMinimumSize(new java.awt.Dimension(260, 45));
-        salidasBtn.setPreferredSize(new java.awt.Dimension(260, 45));
-        salidasBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                salidasBtnActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
         bgLayout.setHorizontalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addContainerGap()
                 .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(40, 40, 40))
-            .addGroup(bgLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(returnBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(239, 239, 239)
-                .addComponent(salidasBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(30, 30, 30))
+                .addContainerGap())
         );
         bgLayout.setVerticalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap()
                 .addComponent(content, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(returnBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(salidasBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -128,6 +137,8 @@ public class gui extends javax.swing.JFrame {
             .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        getAccessibleContext().setAccessibleName("frame");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -139,18 +150,16 @@ public class gui extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_formWindowClosing
 
-    private void salidasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salidasBtnActionPerformed
-        vistaSalidas.initTable();
-        cambiarContent(vistaSalidas);
-        returnBtn.setVisible(true);
-        salidasBtn.setVisible(false);
-    }//GEN-LAST:event_salidasBtnActionPerformed
-
-    private void returnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBtnActionPerformed
-        cambiarContent(vistaAdd);
-        returnBtn.setVisible(false);
-        salidasBtn.setVisible(true);
-    }//GEN-LAST:event_returnBtnActionPerformed
+    private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
+        usuarioActual = usuario.getSelectedItem().toString().toUpperCase();
+        if (usuarioActual.equals("DELEGADO")){
+            vistaSalidas = new viewPanel();
+            cambiarContent(vistaSalidas);
+        } else {
+            vistaAdd = new addPanel(usuarioActual);
+            cambiarContent(vistaAdd);
+        }
+    }//GEN-LAST:event_loginBtnActionPerformed
 
     public void cambiarContent(JPanel p){
         p.setSize(content.getWidth(), content.getHeight());
@@ -161,6 +170,22 @@ public class gui extends javax.swing.JFrame {
         content.repaint();
     }
     
+    public static void initDefs(JComboBox cb){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+            List<Defensor> defs = session.createQuery("from Defensor", Defensor.class).list();
+            for (Defensor d: defs){
+                cb.addItem(d.getNombre());
+            }
+        } catch (Exception e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
     
     /**
      * @param args the command line arguments
@@ -204,7 +229,9 @@ public class gui extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
     private javax.swing.JPanel content;
-    private javax.swing.JButton returnBtn;
-    private javax.swing.JButton salidasBtn;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton loginBtn;
+    private javax.swing.JComboBox<String> usuario;
     // End of variables declaration//GEN-END:variables
 }

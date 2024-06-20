@@ -21,9 +21,11 @@ public class addPanel extends javax.swing.JPanel {
     /**
      * Creates new form addPanel
      */
-    public addPanel() {
+    private String defensor;
+    private EmailSender sender = new EmailSender();
+    public addPanel(String defensor) {
+        this.defensor = defensor;
         initComponents();
-        initDefs();
         initTime();
     }
 
@@ -40,10 +42,8 @@ public class addPanel extends javax.swing.JPanel {
         tipoTF = new javax.swing.JTextField();
         expTF = new javax.swing.JTextField();
         tiempoTF = new javax.swing.JTextField();
-        defensores = new javax.swing.JComboBox<>();
         horas = new javax.swing.JComboBox<>();
         saveBtn = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -51,7 +51,7 @@ public class addPanel extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         lugarTF = new javax.swing.JTextField();
 
-        setMinimumSize(new java.awt.Dimension(720, 465));
+        setMinimumSize(new java.awt.Dimension(804, 588));
 
         bg.setBackground(new java.awt.Color(204, 204, 204));
         bg.setForeground(new java.awt.Color(0, 0, 0));
@@ -62,10 +62,6 @@ public class addPanel extends javax.swing.JPanel {
                 saveBtnActionPerformed(evt);
             }
         });
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("DEFENSOR:");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
@@ -92,70 +88,60 @@ public class addPanel extends javax.swing.JPanel {
         bgLayout.setHorizontalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgLayout.createSequentialGroup()
+                .addGap(47, 47, 47)
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(bgLayout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(bgLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lugarTF))
-                            .addGroup(bgLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(tiempoTF, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE))
-                            .addGroup(bgLayout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(expTF, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE))
-                            .addGroup(bgLayout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(tipoTF, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE))
-                            .addGroup(bgLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(horas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(bgLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(defensores, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lugarTF))
                     .addGroup(bgLayout.createSequentialGroup()
-                        .addGap(174, 174, 174)
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(tiempoTF, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                    .addGroup(bgLayout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(expTF, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE))
+                    .addGroup(bgLayout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(tipoTF, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE))
+                    .addGroup(bgLayout.createSequentialGroup()
+                        .addGap(106, 106, 106)
                         .addComponent(saveBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(112, 112, 112)))
-                .addGap(49, 49, 49))
+                        .addGap(112, 112, 112))
+                    .addGroup(bgLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(horas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(27, 27, 27))
         );
         bgLayout.setVerticalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(bgLayout.createSequentialGroup()
-                .addGap(59, 59, 59)
-                .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(defensores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addGap(70, 70, 70)
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(horas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                .addGap(50, 50, 50)
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(tipoTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addGap(54, 54, 54)
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(lugarTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                .addGap(59, 59, 59)
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(expTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addGap(56, 56, 56)
                 .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(tiempoTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(44, 44, 44)
                 .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -180,7 +166,7 @@ public class addPanel extends javax.swing.JPanel {
                 Defensor def = null;
                 List<Defensor> defs = session.createQuery("from Defensor", Defensor.class).list();
                 for (Defensor d: defs){
-                    if (d.getNombre().equals(defensores.getSelectedItem().toString())){
+                    if (d.getNombre().equals(defensor)){
                         def = d;
                     }
                 }
@@ -191,6 +177,14 @@ public class addPanel extends javax.swing.JPanel {
                 String dura = tiempoTF.getText();
                 Salida salida = new Salida(def,t,dil,lugar,exp,dura);
                 session.save(salida);
+                String message = "<h3>DEFENSOR:</h3> "+defensor+"<br></br>"+
+                        "<h3>HORA DE SALIDA:</h3> "+horas.getSelectedItem().toString()+"<br></br>"+
+                        "<h3>TIPO DE DILIGENCIA:</h3> "+dil+"<br></br>"+
+                        "<h3>LUGAR AL QUE ACUDE:</h3> "+lugar+"<br></br>"+
+                        "<h3>EXPEDIENTES DE CONTROL:</h3> "+exp+"<br></br>"+
+                        "<h3>TIEMPO APROX. DE DURACIÓN:</h3> "+dura;
+                sender.createEmail(def.getEmail(), "PRUEBA DE SALIDAS - SALIDA DE "+def.getNombre(), message);
+                sender.sendEmail();
                 session.getTransaction().commit();
                 session.close();
                 JOptionPane.showMessageDialog(null, "¡Salida guardada satisfactoriamente!");
@@ -205,22 +199,6 @@ public class addPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 
-    private void initDefs(){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            List<Defensor> defs = session.createQuery("from Defensor", Defensor.class).list();
-            for (Defensor d: defs){
-                defensores.addItem(d.getNombre());
-            }
-        } catch (Exception e) {
-            if (session.getTransaction() != null) {
-                session.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-    }
     
     private void initTime(){
         List<String> tiempos = generateTimeOptions();
@@ -245,10 +223,8 @@ public class addPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
-    private javax.swing.JComboBox<String> defensores;
     private javax.swing.JTextField expTF;
     private javax.swing.JComboBox<String> horas;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
